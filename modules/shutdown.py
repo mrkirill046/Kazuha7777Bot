@@ -61,7 +61,7 @@ async def no_shutdown_query(callback: types.CallbackQuery):
 
     if callback.from_user.id == config["owner_id"]:
         await callback.message.edit_text(
-            text="Перезагрузка отменена!",
+            text="Выключение отменено!",
             reply_markup=builder.as_markup()
         )
     else:
