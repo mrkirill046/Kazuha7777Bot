@@ -15,5 +15,7 @@ __all__ = [
     "get_update_count",
     "get_os_name",
     "reboot",
-    "shutdown"
+    "shutdown",
+    "screenshot",
+    "delete_screenshot"
 ]

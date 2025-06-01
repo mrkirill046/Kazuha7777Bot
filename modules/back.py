@@ -32,3 +32,23 @@ async def back_to_commands(callback: types.CallbackQuery):
         text=constants.command_message,
         reply_markup=builder.as_markup()
     )
+
+@router.callback_query(F.data == "back_to_commands_alt")
+async def back_to_commands(callback: types.CallbackQuery):
+    builder = InlineKeyboardBuilder()
+
+    if any(config["allowed_commands"]):
+        for command in config["allowed_commands"]:
+            builder.row(
+                types.InlineKeyboardButton(text=command["name"], callback_data=command["slash_command"])
+            )
+
+    await callback.message.edit_caption(
+        reply_markup=None,
+        caption="Понял тебя, возвращаемся назад!"
+    )
+
+    await callback.message.reply(
+        text=constants.command_message,
+        reply_markup=builder.as_markup()
+    )
