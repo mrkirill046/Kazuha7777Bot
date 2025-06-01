@@ -35,4 +35,4 @@ def screenshot():
 
 def delete_screenshot(screenshot_path: Path):
     screenshot_path.unlink(missing_ok=True)
-    os.unlink("temp")
+    os.remove("temp")
