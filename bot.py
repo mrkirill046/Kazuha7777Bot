@@ -2,7 +2,6 @@ import asyncio
 import os
 import logging
 
-from modules import *
 from utils import constants, load_all_modules
 from aiogram import Bot, Dispatcher
 

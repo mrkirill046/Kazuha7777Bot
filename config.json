@@ -1,1 +1,20 @@
-{}
+{
+  "owner_id": 5133326971,
+  "allowed_commands": [
+    {
+      "name": "🔃 Перезапуск",
+      "description": "Перезапускает компьютер (Arch)",
+      "slash_command": "restart"
+    },
+    {
+      "name": "💤 Выключение",
+      "description": "Выключает компьютер (Arch)",
+      "slash_command": "shutdown"
+    },
+    {
+      "name": "🔍 Статус",
+      "description": "Статус компьютера (Arch)",
+      "slash_command": "status"
+    }
+  ]
+}

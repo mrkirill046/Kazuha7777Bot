@@ -31,14 +31,14 @@ cd Kazuha7777Bot
 ### 2. Создай и активируй виртуальное окружение
 
 ```fish
-python3 -m venv venv
-source venv/bin/activate.fish
+python3 -m venv .venv
+source .venv/bin/activate.fish
 ```
 
 *Если используешь bash/zsh:*
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 ### 3. Установи зависимости
