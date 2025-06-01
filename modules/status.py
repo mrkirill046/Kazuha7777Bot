@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Router, types, F
 from aiogram.filters.command import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
@@ -25,6 +27,8 @@ async def status_query(callback: types.CallbackQuery):
         f"⬆️ Обновлений: `{get_update_count()}`\n"
     )
 
+    logging.info("Computer status: %s", computer_status)
+
     if callback.message is not None:
         await callback.message.edit_text(
             text=computer_status,
@@ -46,8 +50,10 @@ async def status_command(message: types.Message):
         f"📦 Ядро: `{get_kernel()}`\n"
         f"📈 Аптайм: `{get_uptime()}`\n"
         f"📦 Пакетов: `{get_package_count()}`\n"
-        f"⬆️ Обновлений: `{get_update_count()}`\n"
+        f"⬆️ Обновлений: `{get_update_count() if get_update_count() != "0" else "нет"}`\n"
     )
+
+    logging.info("Computer status: %s", computer_status)
 
     try:
         await msg.edit_text(
