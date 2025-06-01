@@ -4,19 +4,25 @@ from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from utils import CustomCommand, constants
+from utils import CustomCommand, constants, config
 
 router = Router()
 
 @router.callback_query(F.data == "custom")
 async def enter_custom_command_query(callback: types.CallbackQuery, state: FSMContext):
-    await callback.message.edit_text(text=constants.enter_command_message)
-    await state.set_state(CustomCommand.waiting_for_command_alt)
+    if callback.from_user.id == config["owner_id"]:
+        await callback.message.edit_text(text=constants.enter_command_message)
+        await state.set_state(CustomCommand.waiting_for_command_alt)
+    else:
+        await callback.answer(text=constants.not_allowed_message)
 
 @router.message(Command("custom"))
 async def enter_custom_command(message: types.Message, state: FSMContext):
-    await message.reply(text=constants.enter_command_message)
-    await state.set_state(CustomCommand.waiting_for_command)
+    if message.from_user.id == config["owner_id"]:
+        await message.reply(text=constants.enter_command_message)
+        await state.set_state(CustomCommand.waiting_for_command)
+    else:
+        await message.reply(text=constants.not_allowed_message)
 
 async def run_command_and_prepare_response(command: str, with_back_button: bool = False):
     builder = None
