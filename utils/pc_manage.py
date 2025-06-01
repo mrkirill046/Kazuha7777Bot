@@ -26,7 +26,7 @@ def screenshot():
         "-n",
         "-b",
         "-o", str(screenshot_path)
-    ])
+    ], check=True)
 
     if result.returncode != 0:
         raise Exception("Не удалось сделать скриншот через spectacle")
@@ -35,4 +35,4 @@ def screenshot():
 
 def delete_screenshot(screenshot_path: Path):
     screenshot_path.unlink(missing_ok=True)
-    os.remove("temp")
+    os.rmdir("temp")

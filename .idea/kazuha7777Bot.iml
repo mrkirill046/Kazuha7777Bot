@@ -4,6 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/bot.build" />
+      <excludeFolder url="file://$MODULE_DIR$/bot.dist" />
+      <excludeFolder url="file://$MODULE_DIR$/bot.onefile-build" />
+      <excludeFolder url="file://$MODULE_DIR$/bot.onefile-build/static_src" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.13 (kazuha7777Bot)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
