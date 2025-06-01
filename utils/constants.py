@@ -11,6 +11,8 @@ config = json.load(config_file)
 token = os.getenv("BOT_TOKEN")
 log_filename = datetime.now().strftime("%d.%m.%Y-%H.%M.log")
 
+enter_command_message = "Введите команду для выполнения:"
+not_found_message = "❌ Команда не найдена"
 shutdown_message = "Вы действительно хотите выключить компьютер?"
 restart_message = "Вы действительно хотите перезагрузить компьютер?"
 wait_message = "Пожалуйста, подождите..."

@@ -1,8 +1,9 @@
 from utils.modules import load_all_modules
+from utils.menu import create_menu
+from utils.state import CustomCommand
 from utils.constants import *
 from utils.pc_status import *
 from utils.pc_manage import *
-from utils.menu import create_menu
 
 __all__ = [
     "load_all_modules",
@@ -17,5 +18,6 @@ __all__ = [
     "reboot",
     "shutdown",
     "screenshot",
-    "delete_screenshot"
+    "delete_screenshot",
+    "CustomCommand"
 ]

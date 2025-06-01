@@ -21,6 +21,7 @@ load_all_modules(dp)
 
 async def main():
     os.makedirs("logs", exist_ok=True)
+
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
