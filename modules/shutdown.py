@@ -44,7 +44,7 @@ async def shutdown_command(message: types.Message):
 @router.callback_query(F.data == "yes_shutdown")
 async def yes_shutdown_query(callback: types.CallbackQuery):
     if callback.from_user.id == config["owner_id"]:
-        await callback.message.edit_text(text="Перезагружаюсь...")
+        await callback.message.edit_text(text="Выключаюсь...")
         await asyncio.sleep(1)
 
         shutdown()
