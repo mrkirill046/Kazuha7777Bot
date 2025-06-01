@@ -51,9 +51,10 @@ pip install -r requirements.txt
 
 ```env
 BOT_TOKEN=твой_токен_от_бота_в_Telegram
+TENOR_API_KEY=твой_токен_от_Tenor
 ```
 
-### 5. Настрой бота как хочешь в `config.json`
+### 5. Настройки бота в `config.json`
 
 ### 6. Запусти бота
 

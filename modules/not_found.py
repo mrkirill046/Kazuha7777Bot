@@ -8,9 +8,9 @@ router = Router()
 class CommandNotInListFilter(Filter, ABC):
     def __init__(self):
         self.allowed_commands = {
-            command["slash_command"].lower()
-            for command in config["allowed_commands"]
+            command["slash_command"].lower() for command in config["allowed_commands"]
         }
+        self.allowed_commands.add("start")
 
     async def __call__(self, message: types.Message) -> bool:
         if not message.text or not message.text.startswith("/"):

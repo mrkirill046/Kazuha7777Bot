@@ -34,3 +34,27 @@ no_restart_command = "❌ Нет, не уверен"
 yes_restart_command = "✅ Да, уверен"
 no_shutdown_command = "❌ Нет, не уверен"
 yes_shutdown_command = "✅ Да, уверен"
+
+HELLO_WORLD_CODES = {
+    "python": 'print("Hello, world!")',
+    "c++": '#include <iostream>\nint main() {\n    std::cout << "Hello, world!";\n    return 0;\n}',
+    "java": 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, world!");\n    }\n}',
+    "javascript": 'console.log("Hello, world!");',
+    "rust": 'fn main() {\n    println!("Hello, world!");\n}',
+}
+
+BIO_TEXT = (
+    "👤 Имя: `Кирилл`\n"
+    "🎂 День рождения: `13.06.2010`\n"
+    "💻 Программист, люблю кодить\n"
+    "🏫 Учусь в школе `(9 класс)`\n"
+)
+
+LANG_LIST_MD = (
+    "*💡 Укажите язык программирования:*\n\n"
+    "- `python`\n"
+    "- `c++`\n"
+    "- `java`\n"
+    "- `javascript`\n"
+    "- `rust`"
+)
