@@ -11,6 +11,7 @@ config = json.load(config_file)
 token = os.getenv("BOT_TOKEN")
 log_filename = datetime.now().strftime("%d.%m.%Y-%H.%M.log")
 
+shutdown_message = "Вы действительно хотите выключить компьютер?"
 restart_message = "Вы действительно хотите перезагрузить компьютер?"
 wait_message = "Пожалуйста, подождите..."
 settings_message = "Выберите нужную вам настройку из меню ниже."
@@ -29,3 +30,5 @@ tgc_button = "💻 Мой ТГК"
 back_command = "◀️ Назад"
 no_restart_command = "❌ Нет, не уверен"
 yes_restart_command = "✅ Да, уверен"
+no_shutdown_command = "❌ Нет, не уверен"
+yes_shutdown_command = "✅ Да, уверен"

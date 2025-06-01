@@ -14,5 +14,6 @@ __all__ = [
     "get_package_count",
     "get_update_count",
     "get_os_name",
-    "reboot"
+    "reboot",
+    "shutdown"
 ]
