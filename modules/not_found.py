@@ -5,6 +5,7 @@ from utils import constants, create_menu, config
 
 router = Router()
 
+
 class CommandNotInListFilter(Filter, ABC):
     def __init__(self):
         self.allowed_commands = {
@@ -19,6 +20,7 @@ class CommandNotInListFilter(Filter, ABC):
         command = message.text[1:].split()[0].lower()
 
         return command not in self.allowed_commands
+
 
 @router.message(CommandNotInListFilter())
 async def unknown_command(message: types.Message):

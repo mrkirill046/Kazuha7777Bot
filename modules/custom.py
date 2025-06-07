@@ -8,6 +8,7 @@ from utils import CustomCommand, constants, config
 
 router = Router()
 
+
 @router.callback_query(F.data == "custom")
 async def enter_custom_command_query(callback: types.CallbackQuery, state: FSMContext):
     if callback.from_user.id == config["owner_id"]:
@@ -16,6 +17,7 @@ async def enter_custom_command_query(callback: types.CallbackQuery, state: FSMCo
     else:
         await callback.answer(text=constants.not_allowed_message)
 
+
 @router.message(Command("custom"))
 async def enter_custom_command(message: types.Message, state: FSMContext):
     if message.from_user.id == config["owner_id"]:
@@ -23,6 +25,7 @@ async def enter_custom_command(message: types.Message, state: FSMContext):
         await state.set_state(CustomCommand.waiting_for_command)
     else:
         await message.reply(text=constants.not_allowed_message)
+
 
 async def run_command_and_prepare_response(command: str, with_back_button: bool = False):
     builder = None
@@ -49,6 +52,7 @@ async def run_command_and_prepare_response(command: str, with_back_button: bool 
 
     return response, builder
 
+
 @router.message(CustomCommand.waiting_for_command)
 async def execute_custom_command(message: types.Message, state: FSMContext):
     command = message.text
@@ -56,6 +60,7 @@ async def execute_custom_command(message: types.Message, state: FSMContext):
 
     await message.reply(response, parse_mode="HTML")
     await state.clear()
+
 
 @router.message(CustomCommand.waiting_for_command_alt)
 async def execute_custom_command_query(message: types.Message, state: FSMContext):

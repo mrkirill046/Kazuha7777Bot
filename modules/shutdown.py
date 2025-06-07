@@ -7,6 +7,7 @@ from utils import constants, config, shutdown
 
 router = Router()
 
+
 @router.callback_query(F.data == "shutdown")
 async def shutdown_query(callback: types.CallbackQuery):
     if callback.from_user.id == config["owner_id"]:
@@ -23,6 +24,7 @@ async def shutdown_query(callback: types.CallbackQuery):
         )
     else:
         await callback.answer(text=constants.not_allowed_message)
+
 
 @router.message(Command("shutdown"))
 async def shutdown_command(message: types.Message):
@@ -41,6 +43,7 @@ async def shutdown_command(message: types.Message):
     else:
         await message.reply(text=constants.not_allowed_message)
 
+
 @router.callback_query(F.data == "yes_shutdown")
 async def yes_shutdown_query(callback: types.CallbackQuery):
     if callback.from_user.id == config["owner_id"]:
@@ -50,6 +53,7 @@ async def yes_shutdown_query(callback: types.CallbackQuery):
         shutdown()
     else:
         await callback.answer(text=constants.not_allowed_message)
+
 
 @router.callback_query(F.data == "no_shutdown")
 async def no_shutdown_query(callback: types.CallbackQuery):

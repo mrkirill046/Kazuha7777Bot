@@ -7,6 +7,7 @@ from utils import constants, config, reboot
 
 router = Router()
 
+
 @router.callback_query(F.data == "restart")
 async def restart_query(callback: types.CallbackQuery):
     if callback.from_user.id == config["owner_id"]:
@@ -23,6 +24,7 @@ async def restart_query(callback: types.CallbackQuery):
         )
     else:
         await callback.answer(text=constants.not_allowed_message)
+
 
 @router.message(Command("restart"))
 async def restart_command(message: types.Message):
@@ -41,6 +43,7 @@ async def restart_command(message: types.Message):
     else:
         await message.reply(text=constants.not_allowed_message)
 
+
 @router.callback_query(F.data == "yes_restart")
 async def yes_restart_query(callback: types.CallbackQuery):
     if callback.from_user.id == config["owner_id"]:
@@ -50,6 +53,7 @@ async def yes_restart_query(callback: types.CallbackQuery):
         reboot()
     else:
         await callback.answer(text=constants.not_allowed_message)
+
 
 @router.callback_query(F.data == "no_restart")
 async def no_restart_query(callback: types.CallbackQuery):

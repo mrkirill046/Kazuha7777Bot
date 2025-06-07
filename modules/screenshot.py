@@ -8,6 +8,7 @@ from utils import constants, config, screenshot, delete_screenshot
 
 router = Router()
 
+
 @router.callback_query(F.data == "screenshot")
 async def sent_screenshot_query(callback: types.CallbackQuery, bot: Bot):
     if callback.from_user.id == config["owner_id"]:
@@ -36,6 +37,7 @@ async def sent_screenshot_query(callback: types.CallbackQuery, bot: Bot):
         delete_screenshot(screenshot_path)
     else:
         await callback.answer(text=constants.not_allowed_message)
+
 
 @router.message(Command("screenshot"))
 async def sent_screenshot_command(message: types.Message, bot: Bot):

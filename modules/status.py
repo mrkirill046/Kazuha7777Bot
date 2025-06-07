@@ -8,6 +8,7 @@ from utils import get_os_name
 
 router = Router()
 
+
 @router.callback_query(F.data == "status")
 async def status_query(callback: types.CallbackQuery):
     builder = InlineKeyboardBuilder()
@@ -39,6 +40,7 @@ async def status_query(callback: types.CallbackQuery):
         await callback.answer(
             text=constants.error_message
         )
+
 
 @router.message(Command("status"))
 async def status_command(message: types.Message):

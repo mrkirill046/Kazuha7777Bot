@@ -10,9 +10,11 @@ def reboot():
     logging.info("Rebooting...")
     os.system("sudo /usr/bin/reboot")
 
+
 def shutdown():
     logging.info("Shutting down...")
     os.system("sudo /usr/bin/shutdown now")
+
 
 def screenshot():
     if not os.path.exists("temp"):
@@ -32,6 +34,7 @@ def screenshot():
         raise Exception("Не удалось сделать скриншот через spectacle")
 
     return screenshot_path
+
 
 def delete_screenshot(screenshot_path: Path):
     screenshot_path.unlink(missing_ok=True)

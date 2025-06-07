@@ -8,6 +8,7 @@ from utils import constants, config
 
 router = Router()
 
+
 @router.inline_query()
 async def handle_inline_query(inline_query: types.InlineQuery):
     query = inline_query.query.strip().lower()
