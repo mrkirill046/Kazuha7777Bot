@@ -17,21 +17,28 @@ def shutdown():
 
 
 def screenshot():
-    if not os.path.exists("temp"):
-        os.mkdir("temp")
+    os.makedirs("temp", exist_ok=True)
 
-    time = datetime.now().strftime("%Y%m%d%H%M%S")
-    screenshot_path = Path(os.path.join("temp", f"screenshot-{time}.png"))
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    screenshot_path = Path("temp") / f"screenshot-{timestamp}.png"
+
+    grimblast_path = Path.home() / ".local" / "lib" / "hyde" / "grimblast"
+
+    if not grimblast_path.exists():
+        raise FileNotFoundError(f"grimblast not found at: {grimblast_path}")
 
     result = subprocess.run([
-        "spectacle",
-        "-n",
-        "-b",
-        "-o", str(screenshot_path)
-    ], check=True)
+        str(grimblast_path),
+        "copysave",
+        "output",
+        str(screenshot_path)
+    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
     if result.returncode != 0:
-        raise Exception("Не удалось сделать скриншот через spectacle")
+        raise RuntimeError(f"grimblast error: {result.stderr.strip()}")
+
+    if not screenshot_path.exists():
+        raise RuntimeError("grimblast did not create the screenshot file")
 
     return screenshot_path
 

@@ -9,7 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/bot.onefile-build" />
       <excludeFolder url="file://$MODULE_DIR$/bot.onefile-build/static_src" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.13 (kazuha7777Bot)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="uv (kazuha7777Bot)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

@@ -1,0 +1,11 @@
+[project]
+name = "kazuha7777bot"
+version = "1.0.0"
+description = "TelegramBOT - Python with Aiogram "
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram==3.21.0",
+    "python-dotenv==1.1.1",
+    "requests==2.32.4"
+]

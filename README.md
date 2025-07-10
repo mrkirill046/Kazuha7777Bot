@@ -31,35 +31,30 @@ cd Kazuha7777Bot
 ### 2. Создай и активируй виртуальное окружение
 
 ```fish
-python3 -m venv .venv
+uv venv
 source .venv/bin/activate.fish
 ```
 
 *Если используешь bash/zsh:*
 
 ```bash
+uv venv
 source .venv/bin/activate
 ```
 
-### 3. Установи зависимости
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Создай `.env` файл с настройками бота
+### 3. Создай `.env` файл с настройками бота
 
 ```env
 BOT_TOKEN=твой_токен_от_бота_в_Telegram
 TENOR_API_KEY=твой_токен_от_Tenor
 ```
 
-### 5. Настройки бота в `config.json`
+### 4. Настройки бота в `config.json`
 
-### 6. Запусти бота
+### 5. Запусти бота
 
 ```bash
-python bot.py
+uv run --script bot.py
 ```
 
 ---
@@ -74,14 +69,14 @@ python bot.py
 │
 ├── config.json         # Конфигурационный файл с токенами и настройками
 ├── .env                # Конфиденциальные настройки (не в репозитории!)
-├── requirements.txt    # Файл зависимостей
+├── pyproject.toml      # Файл зависимостей
 ├── README.md           # Документация проекта (ты её читаешь 😉)
 └── bot.py              # Главный запускной файл бота
 ```
 
 ---
 
-## Команды (Arch Linux)
+## Команды (Arch Linux - Hyprland)
 
 | Команда       | Описание                                       |
 |---------------|------------------------------------------------|
@@ -91,6 +86,45 @@ python bot.py
 | `/status`     | Проверка состояния компьютера                  |
 | `/screenshot` | Скриншот активного экрана                      |
 | `/custom`     | Выполняет пользовательскую команду в терминале |
+
+---
+
+## ПРЕДУПРЕЖДЕНИЕ
+Для работы скриншотов у вас должен быть `grimblast` (отредактируйте его путь в `utils/pc_manage.py` в методе `screenshot`)
+
+Также бот должен быть запущен как юзер-сервис
+```bash
+nano ~/.config/systemd/user/kazuha7777bot.service
+```
+
+#### !!! Не забудьте поменять пути !!!
+
+```ini
+[Unit]
+Description=Kazuha7777 Telegram Bot
+After=network.target
+
+[Service]
+WorkingDirectory=/home/mrkir/Documents/Python/kazuha7777Bot
+ExecStart=/home/mrkir/.local/bin/uv run --project /home/mrkir/Documents/Python/kazuha7777Bot --script /home/mrkir/Documents/Python/kazuha7777Bot/bot.py
+Restart=always
+RestartSec=10
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=WAYLAND_DISPLAY=wayland-1
+Environment=PATH=/home/mrkir/Documents/Python/kazuha7777Bot/.venv/bin:/usr/bin:/bin
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
+```
+
+#### Запуск
+
+```bash
+systemctl --user daemon-reload                 
+systemctl --user enable --now kazuha7777bot.service
+```
 
 ---
 
