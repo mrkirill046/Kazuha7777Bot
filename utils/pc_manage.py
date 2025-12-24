@@ -22,7 +22,7 @@ def screenshot():
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     screenshot_path = Path("temp") / f"screenshot-{timestamp}.png"
 
-    grimblast_path = Path.home() / ".local" / "lib" / "hyde" / "grimblast"
+    grimblast_path = Path("/usr/bin/grimblast")
 
     if not grimblast_path.exists():
         raise FileNotFoundError(f"grimblast not found at: {grimblast_path}")
@@ -45,4 +45,8 @@ def screenshot():
 
 def delete_screenshot(screenshot_path: Path):
     screenshot_path.unlink(missing_ok=True)
-    os.rmdir("temp")
+
+    try:
+        os.rmdir("temp")
+    except OSError:
+        pass
