@@ -3,7 +3,7 @@ import os
 import requests
 
 from aiogram import Router, types
-from aiogram.types import InlineQueryResultArticle, InputTextMessageContent
+from aiogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineQueryResultGif, InlineQueryResult
 from utils import constants, config
 
 router = Router()
@@ -86,7 +86,7 @@ async def handle_inline_query(inline_query: types.InlineQuery):
         search_term = query[4:].strip()
 
         api_key = os.getenv("TENOR_API_KEY")
-        limit = 5
+        limit = 15
 
         response = requests.get(
             "https://tenor.googleapis.com/v2/search",
@@ -102,18 +102,18 @@ async def handle_inline_query(inline_query: types.InlineQuery):
         if response.status_code == 200:
             data = response.json()
 
+            results: list[InlineQueryResult] = []
+
             for result in data.get("results", []):
                 gif_url = result["media_formats"]["gif"]["url"]
+                preview = result["media_formats"]["tinygif"]["url"]
 
                 results.append(
-                    InlineQueryResultArticle(
+                    InlineQueryResultGif(
                         id=str(uuid.uuid4()),
-                        title=search_term,
-                        description="Нажмите, чтобы отправить GIF",
-                        input_message_content=InputTextMessageContent(
-                            message_text=gif_url
-                        ),
-                        thumb_url=gif_url
+                        gif_url=gif_url,
+                        thumbnail_url=preview,
+                        title=search_term
                     )
                 )
         else:
