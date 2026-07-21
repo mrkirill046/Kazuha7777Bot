@@ -1,60 +1,46 @@
-from aiogram import Router, types, F
-from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
-from utils import constants, config
+from aiogram import F, Router, types
+from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
+
+from utils import config, constants, registered_commands
 
 router = Router()
 
 
-@router.message(F.text == constants.settings_button)
-async def settings(message: types.Message):
-    builder = ReplyKeyboardBuilder()
-
-    builder.row(
-        types.KeyboardButton(text=constants.back_command)
-    )
-
-    await message.reply(
-        text=constants.settings_message,
-        reply_markup=builder.as_markup(resize_keyboard=True)
-    )
-
-
 @router.message(F.text == constants.user_button)
-async def user(message: types.Message):
+async def user(message: types.Message) -> None:
     user = message.from_user
 
     builder = ReplyKeyboardBuilder()
-
-    builder.row(
-        types.KeyboardButton(text=constants.back_command)
-    )
+    builder.row(types.KeyboardButton(text=constants.back_command))
 
     if user is not None:
+        status = "Full access" if user.id == config["owner_id"] else "Restricted access"
+
         await message.reply(
             text=(
-                f"👤 *Личный кабинет*\n\n"
-                f"📛 Имя: {user.full_name}\n"
-                f"🆔 Telegram ID: `{user.id}`\n"
-                f"💼 Статус: {"Полный доступ" if user.id == config["owner_id"] else "Ограниченный доступ"}\n"
+                f"Profile\n\n"
+                f"Name: {user.full_name}\n"
+                f"Telegram ID: `{user.id}`\n"
+                f"Status: {status}\n"
             ),
             parse_mode="Markdown",
-            reply_markup=builder.as_markup(resize_keyboard=True)
+            reply_markup=builder.as_markup(resize_keyboard=True),
         )
     else:
         await message.reply(text=constants.error_message)
 
 
 @router.message(F.text == constants.command_button)
-async def command(message: types.Message):
+async def command(message: types.Message) -> None:
     builder = InlineKeyboardBuilder()
 
-    if any(config["allowed_commands"]):
-        for command in config["allowed_commands"]:
-            builder.row(
-                types.InlineKeyboardButton(text=command["name"], callback_data=command["slash_command"])
+    for cmd in registered_commands:
+        builder.row(
+            types.InlineKeyboardButton(
+                text=cmd["name"], callback_data=cmd["callback_data"]
             )
+        )
 
     await message.reply(
-        text=constants.command_message,
-        reply_markup=builder.as_markup()
+        text=constants.command_message, reply_markup=builder.as_markup()
     )

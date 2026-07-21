@@ -1,41 +1,40 @@
 import json
 import os
+from datetime import datetime
 
 from dotenv import load_dotenv
-from datetime import datetime
 
 load_dotenv()
 
-config_file = open("config.json", "r")
-config = json.load(config_file)
-token = os.getenv("BOT_TOKEN")
-log_filename = datetime.now().strftime("%d.%m.%Y-%H.%M.log")
+with open("config.json", "r") as f:
+    config: dict = json.load(f)
 
-enter_command_message = "Введите команду для выполнения:"
-not_found_message = "❌ Команда не найдена"
-shutdown_message = "Вы действительно хотите выключить компьютер?"
-restart_message = "Вы действительно хотите перезагрузить компьютер?"
-wait_message = "Пожалуйста, подождите..."
-settings_message = "Выберите нужную вам настройку из меню ниже."
-not_allowed_message = "Действие не было совершено! Необходимо получить полный доступ к боту."
-error_message = "Прости, но что-то пошло не так. Действие не было совершено! Сожалею :("
-command_message = "Выберите, что вы хотите сделать. Для этого нажмите на нужную вам кнопку."
-welcome_message = """
-Добро пожаловать в личного бота для @kazuha7777! \n
-Выберите, что вы хотите сделать. Для этого нажмите на нужную вам кнопку.
-"""
+token: str = os.getenv("BOT_TOKEN", "")
+log_filename: str = datetime.now().strftime("%d.%m.%Y-%H.%M.log")
 
-settings_button = "⚙️ Настройки"
-user_button = "👤 Личный кабинет"
-command_button = "🔧 Команды"
-tgc_button = "💻 Мой ТГК"
-back_command = "◀️ Назад"
-no_restart_command = "❌ Нет, не уверен"
-yes_restart_command = "✅ Да, уверен"
-no_shutdown_command = "❌ Нет, не уверен"
-yes_shutdown_command = "✅ Да, уверен"
+enter_command_message = "Enter the command to execute:"
+not_found_message = "Command not found"
+shutdown_message = "Are you sure you want to shut down the computer?"
+restart_message = "Are you sure you want to restart the computer?"
+wait_message = "Please wait..."
+not_allowed_message = "Action denied. Full access to the bot is required."
+error_message = "Something went wrong. The action was not completed."
+command_message = "Choose what you want to do by pressing a button."
+welcome_message = (
+    "Welcome to the personal bot for @kazuha7777!\n\n"
+    "Choose what you want to do by pressing a button."
+)
 
-HELLO_WORLD_CODES = {
+user_button = "Profile"
+command_button = "Commands"
+tgc_button = "My TG Channel"
+back_command = "Back"
+no_restart_command = "No, not sure"
+yes_restart_command = "Yes, confirm"
+no_shutdown_command = "No, not sure"
+yes_shutdown_command = "Yes, confirm"
+
+HELLO_WORLD_CODES: dict[str, str] = {
     "python": 'print("Hello, world!")',
     "c++": '#include <iostream>\nint main() {\n    std::cout << "Hello, world!";\n    return 0;\n}',
     "java": 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, world!");\n    }\n}',
@@ -44,14 +43,14 @@ HELLO_WORLD_CODES = {
 }
 
 BIO_TEXT = (
-    "👤 Имя: `Кирилл`\n"
-    "🎂 День рождения: `13.06.2010`\n"
-    "💻 Программист, люблю кодить\n"
-    "🏫 Учусь в школе `(9 класс)`\n"
+    "Name: `Kirill`\n"
+    "Birthday: `13.06.2010`\n"
+    "Programmer, love coding\n"
+    "School student `(9th grade)`\n"
 )
 
 LANG_LIST_MD = (
-    "*💡 Укажите язык программирования:*\n\n"
+    "*Specify a programming language:*\n\n"
     "- `python`\n"
     "- `c++`\n"
     "- `java`\n"

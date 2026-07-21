@@ -1,16 +1,22 @@
-import uuid
 import os
-import requests
+import uuid
 
+import requests
 from aiogram import Router, types
-from aiogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineQueryResultGif, InlineQueryResult
-from utils import constants, config
+from aiogram.types import (
+    InlineQueryResult,
+    InlineQueryResultArticle,
+    InlineQueryResultGif,
+    InputTextMessageContent,
+)
+
+from utils import config, constants
 
 router = Router()
 
 
 @router.inline_query()
-async def handle_inline_query(inline_query: types.InlineQuery):
+async def handle_inline_query(inline_query: types.InlineQuery) -> None:
     query = inline_query.query.strip().lower()
     results: list[InlineQueryResultArticle] = []
 
@@ -22,66 +28,62 @@ async def handle_inline_query(inline_query: types.InlineQuery):
             results.append(
                 InlineQueryResultArticle(
                     id=str(uuid.uuid4()),
-                    title=f"Hello World на {lang}",
-                    description=f"Пример Hello World на {lang}",
+                    title=f"Hello World in {lang}",
+                    description=f"Hello World example in {lang}",
                     input_message_content=InputTextMessageContent(
-                        message_text=f"*💻 Hello World на {lang}:*\n\n```{lang}\n{code}\n```",
-                        parse_mode="Markdown"
-                    )
+                        message_text=f"*Hello World in {lang}:*\n\n```{lang}\n{code}\n```",
+                        parse_mode="Markdown",
+                    ),
                 )
             )
         else:
             results.append(
                 InlineQueryResultArticle(
                     id=str(uuid.uuid4()),
-                    title="Язык не найден",
-                    description="Доступные: python, c++, java, javascript, rust",
+                    title="Language not found",
+                    description="Available: python, c++, java, javascript, rust",
                     input_message_content=InputTextMessageContent(
-                        message_text="❌ Язык не найден. Пример: `hw python`",
-                        parse_mode="Markdown"
-                    )
+                        message_text="Language not found. Example: `hw python`",
+                        parse_mode="Markdown",
+                    ),
                 )
             )
-
     elif query == "hw":
         results.append(
             InlineQueryResultArticle(
                 id=str(uuid.uuid4()),
-                title="Укажите язык",
-                description="Выберите один из доступных языков",
+                title="Specify language",
+                description="Choose from available languages",
                 input_message_content=InputTextMessageContent(
                     message_text=constants.LANG_LIST_MD,
-                    parse_mode="Markdown"
-                )
+                    parse_mode="Markdown",
+                ),
             )
         )
-
     elif query == "bio" and inline_query.from_user.id == config["owner_id"]:
         results.append(
             InlineQueryResultArticle(
                 id=str(uuid.uuid4()),
-                title="Моя биография",
-                description="Информация о владельце",
+                title="My bio",
+                description="Owner information",
                 input_message_content=InputTextMessageContent(
                     message_text=constants.BIO_TEXT,
-                    parse_mode="Markdown"
-                )
+                    parse_mode="Markdown",
+                ),
             )
         )
-
     elif query == "gif":
         results.append(
             InlineQueryResultArticle(
                 id=str(uuid.uuid4()),
-                title="Введите поисковый запрос",
-                description="Пример: gif кот",
+                title="Enter a search query",
+                description="Example: gif cat",
                 input_message_content=InputTextMessageContent(
-                    message_text="❌ Пожалуйста, введите поисковый запрос после команды `gif`.",
-                    parse_mode="Markdown"
-                )
+                    message_text="Enter a search query after the `gif` command.",
+                    parse_mode="Markdown",
+                ),
             )
         )
-
     elif query.startswith("gif "):
         search_term = query[4:].strip()
 
@@ -95,8 +97,9 @@ async def handle_inline_query(inline_query: types.InlineQuery):
                 "key": api_key,
                 "limit": limit,
                 "media_filter": "minimal",
-                "contentfilter": "medium"
-            }
+                "contentfilter": "medium",
+            },
+            timeout=10,
         )
 
         if response.status_code == 200:
@@ -113,44 +116,43 @@ async def handle_inline_query(inline_query: types.InlineQuery):
                         id=str(uuid.uuid4()),
                         gif_url=gif_url,
                         thumbnail_url=preview,
-                        title=search_term
+                        title=search_term,
                     )
                 )
         else:
             results.append(
                 InlineQueryResultArticle(
                     id=str(uuid.uuid4()),
-                    title="Ошибка при поиске GIF",
-                    description="Попробуйте позже",
+                    title="Error searching GIF",
+                    description="Try again later",
                     input_message_content=InputTextMessageContent(
-                        message_text="❌ Не удалось получить GIF. Пожалуйста, попробуйте позже.",
-                        parse_mode="Markdown"
-                    )
+                        message_text="Failed to fetch GIF. Please try again later.",
+                        parse_mode="Markdown",
+                    ),
                 )
             )
-
     elif query == "":
         results.append(
             InlineQueryResultArticle(
                 id=str(uuid.uuid4()),
-                title="hw <язык>",
-                description="Показать Hello World на одном из языков",
+                title="hw <language>",
+                description="Show Hello World in one of the languages",
                 input_message_content=InputTextMessageContent(
                     message_text=constants.LANG_LIST_MD,
-                    parse_mode="Markdown"
-                )
+                    parse_mode="Markdown",
+                ),
             )
         )
 
         results.append(
             InlineQueryResultArticle(
                 id=str(uuid.uuid4()),
-                title="gif <запрос>",
-                description="Найти и отправить гифку по запросу",
+                title="gif <query>",
+                description="Find and send a GIF by query",
                 input_message_content=InputTextMessageContent(
-                    message_text="Введите `gif <что искать>` для поиска гифок!",
-                    parse_mode="Markdown"
-                )
+                    message_text="Type `gif <search term>` to search for GIFs!",
+                    parse_mode="Markdown",
+                ),
             )
         )
 
@@ -159,11 +161,11 @@ async def handle_inline_query(inline_query: types.InlineQuery):
                 InlineQueryResultArticle(
                     id=str(uuid.uuid4()),
                     title="bio",
-                    description="Информация о владельце бота",
+                    description="Bot owner information",
                     input_message_content=InputTextMessageContent(
                         message_text=constants.BIO_TEXT,
-                        parse_mode="Markdown"
-                    )
+                        parse_mode="Markdown",
+                    ),
                 )
             )
 

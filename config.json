@@ -1,30 +1,3 @@
 {
-  "owner_id": 5133326971,
-  "allowed_commands": [
-    {
-      "name": "🔃 Перезапуск",
-      "description": "Перезапускает компьютер (Arch)",
-      "slash_command": "restart"
-    },
-    {
-      "name": "💤 Выключение",
-      "description": "Выключает компьютер (Arch)",
-      "slash_command": "shutdown"
-    },
-    {
-      "name": "🔍 Статус",
-      "description": "Статус компьютера (Arch)",
-      "slash_command": "status"
-    },
-    {
-      "name": "🖥️ Скриншот",
-      "description": "Делает скриншот активного экрана",
-      "slash_command": "screenshot"
-    },
-    {
-      "name": "⚙️ Кастомная команда",
-      "description": "Выполняет пользовательскую команду в терминале",
-      "slash_command": "custom"
-    }
-  ]
+  "owner_id": 5133326971
 }

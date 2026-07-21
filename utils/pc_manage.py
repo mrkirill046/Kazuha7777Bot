@@ -1,49 +1,46 @@
 import logging
 import os
 import subprocess
-
-from pathlib import Path
+import time
 from datetime import datetime
+from pathlib import Path
 
 
-def reboot():
+def reboot() -> None:
     logging.info("Rebooting...")
-    os.system("sudo /usr/bin/reboot")
+    subprocess.run(["systemctl", "reboot"])
 
 
-def shutdown():
+def shutdown() -> None:
     logging.info("Shutting down...")
-    os.system("sudo /usr/bin/shutdown now")
+    subprocess.run(["systemctl", "poweroff"])
 
 
-def screenshot():
+def screenshot() -> Path:
     os.makedirs("temp", exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     screenshot_path = Path("temp") / f"screenshot-{timestamp}.png"
 
-    grimblast_path = Path("/usr/bin/grimblast")
-
-    if not grimblast_path.exists():
-        raise FileNotFoundError(f"grimblast not found at: {grimblast_path}")
-
-    result = subprocess.run([
-        str(grimblast_path),
-        "copysave",
-        "output",
-        str(screenshot_path)
-    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    result = subprocess.run(
+        ["niri", "msg", "action", "screenshot-screen", "--path", str(screenshot_path)],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
 
     if result.returncode != 0:
-        raise RuntimeError(f"grimblast error: {result.stderr.strip()}")
+        raise RuntimeError(f"niri screenshot error: {result.stderr.strip()}")
 
-    if not screenshot_path.exists():
-        raise RuntimeError("grimblast did not create the screenshot file")
+    for _ in range(20):
+        if screenshot_path.exists():
+            return screenshot_path
+        time.sleep(0.1)
 
-    return screenshot_path
+    raise RuntimeError("Screenshot file was not created")
 
 
-def delete_screenshot(screenshot_path: Path):
+def delete_screenshot(screenshot_path: Path) -> None:
     screenshot_path.unlink(missing_ok=True)
 
     try:

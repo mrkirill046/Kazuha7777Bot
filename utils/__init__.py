@@ -1,9 +1,18 @@
-from utils.modules import load_all_modules
+from utils.constants import config
 from utils.menu import create_menu
+from utils.modules import load_all_modules
+from utils.owner import OwnerOnlyMiddleware
+from utils.pc_manage import delete_screenshot, reboot, screenshot, shutdown
+from utils.pc_status import (
+    get_hostname,
+    get_kernel,
+    get_os_name,
+    get_system_packages,
+    get_uptime,
+)
 from utils.state import CustomCommand
-from utils.constants import *
-from utils.pc_status import *
-from utils.pc_manage import *
+
+registered_commands: list[dict] = []
 
 __all__ = [
     "load_all_modules",
@@ -12,12 +21,13 @@ __all__ = [
     "get_hostname",
     "get_kernel",
     "get_uptime",
-    "get_package_count",
-    "get_update_count",
+    "get_system_packages",
     "get_os_name",
     "reboot",
     "shutdown",
     "screenshot",
     "delete_screenshot",
-    "CustomCommand"
+    "CustomCommand",
+    "OwnerOnlyMiddleware",
+    "registered_commands",
 ]
