@@ -26,7 +26,7 @@ Personal Telegram bot for remote computer management. Built with Python and Aiog
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/mrkirill046/Kazuha7777Bot.git
+git clone https://github.com/kazuha046/Kazuha7777Bot.git
 cd Kazuha7777Bot
 ```
 
